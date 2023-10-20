@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LRP Uploader</title>
+	<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+	<h1>Upload Files</h1>
+	<form method="POST" enctype="multipart/form-data">
+		<div id="div_left" style="float:left; width:50%;">
+			<h2>Upload excel file Demand Studio</h2>
+			<input type="file" name="file" accept=".xlsx">
+			<br>
+			<br>
+			<button type="submit" name="submit" value="Upload Demand Studio" id="my-button" onclick="changeButtonText()">Process File</button>
+			<br>
+            <br>
+            <p><button type="submit" name="submit" value="template_demand_studio"  
+            style="border: none; background-color: transparent; color: blue; text-decoration: underline; cursor: pointer;">Download Demand Studio template</button></p>
+		    <br>
+		    <h3>Files in the database and their latest version:</h3>
+		    <br>
+		    <table>
+		        <thead>
+		            <tr>
+    		            <th>File Name</th>
+    		            <th>Version</th>
+		            </tr>
+		        </thead>
+				<tbody>
+					{% for index, row in ds_file_version.iterrows() %}
+					<tr>
+						<td>{{ row['file_name'] }}</td>
+						<td>{{ row['version'] }}</td>
+					</tr>
+					{% endfor %}
+
+				</tbody>
+
+		    </table>
+		    
+		    <br>
+		    <br>
+		    <h4>Delete list: </h4>
+
+			<select name="delete_ds" id="">
+				<option value="None" selected>None</option>
+				{% for file in ds_file_list %}
+					<option value="{{file}}">{{file}}</option>
+				{% endfor %}			
+			</select>
+
+			<button id="ds_delete" type="submit" name="submit" value="delete_ds" onclick="changeButtonDelete()" style="background-color: #dc3534; color: #fff;">Delete Selected</button>
+
+		</div>
+		
+		<div id="div_right" style="float:right; width:50%;">
+			<h2>Upload excel file Non Demand Studio</h2>
+			<input type="file" name="file2" accept=".xlsx">
+			<br>
+			<br>
+			<button type="submit" name="submit" value="Upload Non Demand Studio" id="my-button2" onclick="changeButtonText()">Process File</button>
+			<br>
+			<br>
+            <p><button type="submit" name="submit" value="non_demand_templates" 
+            style="border: none; background-color: transparent; color: blue; text-decoration: underline; cursor: pointer;">Download Non Demand Studio template</button></p>
+		    
+		    <br>
+		    <h3>Files in the database and their latest version:</h3>
+		    <br>
+		    <table>
+		        <thead>
+		            <tr>
+    		            <th>File Name</th>
+    		            <th>Version</th>
+		            </tr>
+		        </thead>
+
+				<tbody>
+					{% for index, row in non_ds_file_version.iterrows() %}
+					<tr>
+						<td>{{ row['file_name'] }}</td>
+						<td>{{ row['version'] }}</td>
+					</tr>
+					{% endfor %}
+
+				</tbody>
+
+		    </table>
+		    <br>
+		    <br>
+		    <h4>Delete list: </h4>
+
+			<select name="delete_non_ds" id="">
+				<option value="None" selected>None</option>
+				{% for file in non_ds_file_list %}
+					<option value="{{file}}">{{file}}</option>
+				{% endfor %}			
+			</select>
+
+			<button id="non_ds_delete" type="submit" name="submit" value="delete_non_ds" onclick="changeButtonDelete()" style="background-color: #dc3534; color: #fff;">Delete Selected</button>
+    	    
+		    
+		</div>
+	</form>
+
+	<script>
+        function changeButtonText() {
+            var button = document.getElementById("my-button");
+            var button2 = document.getElementById("my-button2");
+ 
+            button.innerHTML = "Loading...";
+            button2.innerHTML = "Loading...";
+        }
+
+		function changeButtonDelete() {
+			var button = document.getElementById("ds_delete");
+			var button2 = document.getElementById("non_ds_delete");
+
+			button.innerHTML = "Deleting...";
+			button2.innerHTML = "Deleting...";
+		}
+        
+    </script>
+</body>
+</html>
